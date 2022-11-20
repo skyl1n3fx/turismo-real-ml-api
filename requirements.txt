@@ -1,3 +1,8 @@
 fastapi
-numpy==1.23.4
+numpy
 pandas
+requests
+scikit-learn
+wordcloud==1.8.2.2
+uvicorn[standart]
+joblib
