@@ -38,9 +38,8 @@ async def search_recommendations(dwelling_id : int):
     #generate_csv('turismo_real',data)
     
     # hacemos la prediccion
-    top = recommend(item_id = dwelling_id, num = 3)
+    top = recommend(item_id = dwelling_id, num = 2)
     dwellings, message = top_recommended(top)
-    print(dwellings)
     return {
         'message' : message.get('message'),
         'top' : dwellings
