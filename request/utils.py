@@ -2,13 +2,18 @@
 ## Backend TURISMO_REAL
 ##################################
 import requests
-import json
 import csv
 
 BASE_URL = 'http://localhost:8000'
 
 def dwelling_list(count : int) -> dict:
-    response = requests.request('GET',f'{BASE_URL}/ml/dataframe?count={count}')
+    headers = {
+        'Accept-Encoding' : 'gzip, deflate, br',
+        'Accept' : 'application/json',
+        'Content-Type' : 'application/json'
+    }
+    url = f'{BASE_URL}/website-api/dataframe?count={count}/'
+    response = requests.get(url,headers=headers)
     return response.json()
 
 
@@ -38,3 +43,11 @@ def top_recommended(values : list) -> list and dict:
     return response.get('results'), {'message' : f'Top {count} recomendaciones'}
 
 
+""" 
+SABER HEADERS
+h = requests.head(f'{BASE_URL}/ml/dataframe?count={count}')
+header = h.headers
+print(header)
+contentType = header.get('content-type')
+print(contentType)
+"""
