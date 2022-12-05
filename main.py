@@ -5,6 +5,7 @@
 """
 
 from fastapi import FastAPI, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from joblib import load
 from request.utils import find_dwelling, set_dwelling_data, generate_csv, dwelling_list, top_recommended
 from fastapi.encoders import jsonable_encoder
@@ -17,6 +18,16 @@ app = FastAPI()
 @app.get("/")
 def root():
     return {"GoTo": "/docs"}
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from fastapi.responses import JSONResponse
 
