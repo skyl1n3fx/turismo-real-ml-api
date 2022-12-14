@@ -10,7 +10,7 @@ import json
 dict_data = dwelling_list(100)['results']
 
 # Serializing json  
-json_object = json.dumps(dict_data,indent=4) 
+json_object = json.dumps(dict_data) 
 
 # Getting data from Turismo Real Backend
 df = pd.read_json(json_object)
@@ -30,7 +30,7 @@ results = {}
 for idx, row in df.iterrows():
     similar_indices = cosine_similarities[idx].argsort()[:-100:-1]
     similar_items = [(cosine_similarities[idx][i], df['id'][i]) for i in similar_indices]
-    results[row['id']] = similar_items[1:]
+    results[row['id']] = similar_items[2:]
 
 # Prediction
 def item(id):
@@ -45,7 +45,8 @@ def recommend(item_id, num) -> list:
     print('---')
     recs = results[item_id][:num]
     for rec in recs:
-        print('\nRecommended: Dwelling ' + str(rec[1]) + ' ' + item(rec[1]) + '\n(score:' + str(rec[0]) + ')')
-        recommendations.append({'id' : rec[1] , 'score' : round(rec[0],2)})
+        if rec[1] != item_id:
+            print('\nRecommended: Dwelling ' + str(rec[1]) + ' ' + item(rec[1]) + '\n(score:' + str(rec[0]) + ')')
+            recommendations.append({'id' : rec[1] , 'score' : round(rec[0],2)})
     return recommendations
 
