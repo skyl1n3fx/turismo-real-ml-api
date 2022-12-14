@@ -4,8 +4,17 @@ from wordcloud import WordCloud, STOPWORDS
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction import text
+from request.utils import dwelling_list
+import json
 
-df = pd.read_csv('./data/turismo_real.csv', delimiter=',', encoding="utf-8")
+dict_data = dwelling_list(100)['results']
+
+# Serializing json  
+json_object = json.dumps(dict_data,indent=4) 
+
+# Getting data from Turismo Real Backend
+df = pd.read_json(json_object)
+
 # Creamos una columna que contiene la combinacion de columnas productos y salas
 df['content'] = df[['rooms', 'products']].astype(str).apply(lambda x: ' // '.join(x), axis = 1)
 # Fillna
