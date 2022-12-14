@@ -11,7 +11,7 @@ df['content'] = df[['rooms', 'products']].astype(str).apply(lambda x: ' // '.joi
 # Fillna
 df['content'].fillna('Null', inplace = True)
 # Entrenando el recomendador
-my_stop_words = text.ENGLISH_STOP_WORDS.union(["spanish"])
+my_stop_words = list(text.ENGLISH_STOP_WORDS.union(["spanish"]))
 tf = TfidfVectorizer(analyzer = 'word', ngram_range = (1, 2), min_df = 0, stop_words = my_stop_words)
 tfidf_matrix = tf.fit_transform(df['content'])
 # Similitud de coseno
