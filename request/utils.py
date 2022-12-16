@@ -42,12 +42,3 @@ def top_recommended(values : list) -> list and dict:
     response = requests.request('GET',path).json()
     return response.get('results'), {'message' : f'Top {count} recomendaciones'}
 
-
-""" 
-SABER HEADERS
-h = requests.head(f'{BASE_URL}/ml/dataframe?count={count}')
-header = h.headers
-print(header)
-contentType = header.get('content-type')
-print(contentType)
-"""
